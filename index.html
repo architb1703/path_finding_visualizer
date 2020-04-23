@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Build A Maze</title>
+        <script type="text/javascript" src='./main.js'></script>
+        <link rel="stylesheet" href="./index.css">
+    </head>
+    <body>
+        <div id="title_bar">
+            <h1>Build A Maze</h1>
+            <button id='startBtn' type="button" onclick="startBlock()">Start Flag</button>
+            <button id='stopBtn' type="button" onclick="stopBlock()">Stop Flag</button>
+            <button id='wallBtn' type="button" onclick="wallBlock()">Build Walls</button>
+            <button id='pathBtn' type="button" onclick="getPath()">Get Path</button>
+        </div>
+        <div id="grid">
+            <canvas id="matrix" style="border: 1px solid black;"></canvas>
+        </div>
+    </body>
+</html>

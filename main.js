@@ -2,7 +2,7 @@ var grid = [];
 var start_idx = [];
 var stop_idx = [];
 var c, ctx;
-var dim_w=50, dim_h=50;
+var dim_w=25, dim_h=25;
 var start_flag = 0;
 var stop_flag = 0;
 var color = 1;
@@ -100,6 +100,19 @@ function addBlock(idx, idy){
     }
 }
 
+function getReset(){
+    for(var row = 0; row<dim_w; row++){
+        for(var col=0; col<dim_h; col++){
+            if(grid[col][row]==0){
+                grid[col][row] = 1;
+            }
+            addBlock(row, col);
+        }
+    }
+    flag = 0;
+    color = 1;    
+}
+
 function startBlock(){
     color = 2;
 }
@@ -114,21 +127,33 @@ function wallBlock(){
 
 var flag = 0;
 function getPath(){
-    var w = new Worker('./index.js')
+    var workerPath = '';
+    if(document.getElementById('algoSelect').value=='dijkstra'){
+        workerPath = './dijkstra.js'
+    }
+    else if(document.getElementById('algoSelect').value=='astar'){
+        workerPath = './astar.js'
+    }
+    if(start_idx.length==0 || stop_idx.length==0){
+        alert('Pick start and stop flags');
+        return;
+    }
+    var w = new Worker(workerPath)
     w.postMessage([grid, start_idx, stop_idx, dim_h, dim_w]);
     w.onmessage = function(event){
         if(flag){
             t = stop_idx;
             console.log(t);
+            t = event.data[t[1]][t[0]];
             while((t[0]!=start_idx[0]) || (t[1]!=start_idx[1])){
-                t = event.data[t[1]][t[0]];
                 ctx.fillStyle = '#0000FF';
                 ctx.fillRect((t[0])*(c.width/dim_h), (t[1])*(c.height/dim_w), c.width/dim_h, c.height/dim_w);
+                t = event.data[t[1]][t[0]];
             }
         }
         else{
             //Color the block searched by the algo
-            ctx.fillStyle = LightenDarkenColor('#AA0BFF', event.data[2]*3);
+            ctx.fillStyle = LightenDarkenColor('#CC0BFF', event.data[2]*0.2);
             if(event.data[0]==start_idx[0] && event.data[1]==start_idx[1]){}
             else if(event.data[0]==stop_idx[0] && event.data[1]==stop_idx[1]){
                 flag = 1;

@@ -8,10 +8,17 @@
     <body>
         <div id="title_bar">
             <h1>Build A Maze</h1>
-            <button id='startBtn' type="button" onclick="startBlock()">Start Flag</button>
-            <button id='stopBtn' type="button" onclick="stopBlock()">Stop Flag</button>
-            <button id='wallBtn' type="button" onclick="wallBlock()">Build Walls</button>
-            <button id='pathBtn' type="button" onclick="getPath()">Get Path</button>
+            <button id='startBtn' class='button'  onclick="startBlock()">Start Flag</button>
+            <button id='stopBtn'  class='button' onclick="stopBlock()">Stop Flag</button>
+            <button id='wallBtn'  class='button' onclick="wallBlock()">Build Walls</button>
+            <button id='pathBtn'  class='button' onclick="getPath()">Get Path</button>
+            <button id='resetBtn' class='button'  onclick="getReset()">Reset</button>
+            <div class="custom-select" style="width:200px;">
+                <select id='algoSelect'>
+                    <option value="dijkstra">Dijkstra</option>
+                    <option value="astar">A Star</option>
+                </select>
+            </div>
         </div>
         <div id="grid">
             <canvas id="matrix" style="border: 1px solid black;"></canvas>
